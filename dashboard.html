@@ -1,0 +1,61 @@
+<section id="dashboard_section" layout='row' flex ng-init="init()">
+    <side-nav></side-nav>
+    <div layout="column" class="relative" layout-fill role="main">
+        <md-toolbar md-theme="checkedup" class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+                    <ng-md-icon icon="menu"></ng-md-icon>
+                </md-button>
+
+                <span flex></span>
+                <md-button class="md-fab md-primary md-mini md-hue-3" ng-click="videoPlay()" aria-label="Video Player Control">
+                    <ng-md-icon id="icon" icon="{{video_player_icon}}" options='{"duration": 300, "rotation": "none", "easing": "sine-in-out"}'></ng-md-icon>
+                </md-button>
+                <md-button class="md-fab md-primary md-mini" ng-disabled="showLoading()" aria-label="Back" ng-click="prevVideo()">
+                    <ng-md-icon icon="arrow_back"></ng-md-icon>
+                </md-button>
+                <md-button class="md-fab md-primary md-mini" ng-disabled="showLoading()" aria-label="Next" ng-click="nextVideo()">
+                    <ng-md-icon icon="arrow_forward"></ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content id="content_dashboard" class="content-dashboard" flex layout="column" ng-cloak>
+            <img id="video_bg" src="images/gradient/vide_bg.png"/>
+            <div id="dashboard_inner_content">
+                <div id="loading_circle" ng-show="showLoading()" flex style="background-color: rgba(255, 255, 255, 0.5); position: absolute; z-index: 9999;">
+                    <div layout="column" layout-fill layout-align="center center">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                        <h2>Loading</h2>
+                    </div>
+                </div>
+                <img id="poster" src="images/poster.png" ng-show="showPlay()" style=" position: absolute;z-index: 9999;" ng-click= "videoPlay()" >
+                <div id="canvas_parent" ng-show="isInIphone">
+                    <div flex layout="column" layout-align="start center" layout-fill>
+                        <video id="video" ng-show="videoPresent()"
+                               controls style="visibility:hidden" src="" webkit-playsinline>
+                        </video>
+                        <canvas id="canvas" ng-click= "videoPlay()"></canvas>
+                    </div>
+                </div>
+
+                <video id="video_player" ng-click="toogleVideoPlayer()"flex
+                       ng-show="!isInIphone"
+                       poster="images/video_background.png"
+                       src="" type="video/mp4"
+                       webkit-playsinline>
+                    Your browser does not support HTML5 video.
+
+                </video>
+                <video id="video_player_next"
+                       width="100%"
+                       ng-hide="true"
+                       src="" type="video/mp4"
+                       webkit-playsinline>
+                </video>
+            </div>
+
+        </md-content>
+
+        <footer id="footer_steps" ng-init="init()" footer-module></footer>
+    </div>
+</section>
